@@ -18,27 +18,40 @@
 
 ## 결과 확인 방법
 
-### 방법 1: 브라우저에서 바로 열기
+### 방법 1: GitHub Pages로 클라우드에서 바로 확인하기
 
-1. 파일 탐색기에서 이 프로젝트 폴더를 엽니다.
-2. `index.html` 파일을 더블 클릭합니다.
-3. 브라우저에서 기본 화면이 보이는지 확인합니다.
+이 프로젝트는 GitHub Pages 배포 워크플로를 포함합니다. PR이 `main` 브랜치에 병합되면 GitHub Actions가 정적 사이트를 배포하므로, 로컬로 내려받지 않아도 브라우저에서 바로 확인할 수 있습니다.
 
-### 방법 2: 로컬 서버로 확인하기
+1. GitHub 저장소의 `Actions` 탭을 엽니다.
+2. `Deploy static TTS app to GitHub Pages` 워크플로가 성공했는지 확인합니다.
+3. 성공한 워크플로 실행 화면의 `deploy` 작업에서 `github-pages` 배포 URL을 엽니다.
+4. 보통 배포 주소는 `https://<GitHub 사용자명>.github.io/<저장소명>/` 형식입니다.
 
-터미널에서 프로젝트 폴더로 이동한 뒤 다음 명령어를 실행합니다.
+> 참고: 저장소 설정에서 GitHub Pages가 비활성화되어 있다면 `Settings` → `Pages`에서 `Source`를 `GitHub Actions`로 설정해야 합니다.
+
+### 방법 2: GitHub Codespaces에서 브라우저 미리보기로 확인하기
+
+GitHub Pages 배포 전에도 클라우드 개발 환경에서 바로 확인할 수 있습니다.
+
+1. GitHub 저장소에서 `Code` → `Codespaces` → `Create codespace on main`을 선택합니다.
+2. Codespaces 터미널에서 다음 명령어를 실행합니다.
 
 ```bash
 python3 -m http.server 8000
 ```
 
-그 다음 브라우저에서 아래 주소로 접속합니다.
+3. Codespaces가 표시하는 `Open in Browser` 또는 포트 `8000`의 전달 URL을 엽니다.
+4. 확인이 끝나면 터미널에서 `Ctrl + C`를 눌러 서버를 종료합니다.
 
-```text
-http://localhost:8000
+### 방법 3: 로컬에서 확인하기
+
+로컬로 내려받아 확인해야 하는 경우에는 프로젝트 폴더에서 `index.html`을 직접 열거나 다음 명령어로 로컬 서버를 실행합니다.
+
+```bash
+python3 -m http.server 8000
 ```
 
-확인이 끝나면 터미널에서 `Ctrl + C`를 눌러 서버를 종료합니다.
+그 다음 브라우저에서 `http://localhost:8000`으로 접속합니다.
 
 ## 다음 단계
 
