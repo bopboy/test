@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>간단한 TTS 앱</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>간단한 TTS 앱</h1>
+
+    <section aria-labelledby="tts-form-title">
+      <h2 id="tts-form-title">문장 읽기</h2>
+
+      <label for="textInput">읽을 문장을 입력하세요</label>
+      <textarea id="textInput" name="text" rows="6" placeholder="예: 안녕하세요. 반갑습니다."></textarea>
+
+      <div>
+        <button type="button" id="speakButton">읽기</button>
+        <button type="button" id="stopButton">정지</button>
+      </div>
+
+      <p id="message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
