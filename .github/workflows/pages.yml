@@ -1,38 +1,53 @@
-name: Deploy static TTS app to GitHub Pages
+name: Deploy static TTS app previews
 
 on:
   push:
     branches:
-      - main
+      - '**'
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: pages-${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
+      - name: Prepare static site
+        run: |
+          mkdir -p dist
+          cp index.html style.css script.js dist/
 
-      - name: Upload static site
-        uses: actions/upload-pages-artifact@v3
+      - name: Choose preview path
+        run: |
+          safe_branch=$(printf '%s' "${GITHUB_REF_NAME}" | tr '/[:upper:]' '-[:lower:]' | tr -cd 'a-z0-9._-')
+
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then
+            destination_dir='.'
+            page_path=''
+          else
+            destination_dir="previews/${safe_branch}"
+            page_path="${destination_dir}/"
+          fi
+
+          echo "destination_dir=${destination_dir}" >> "$GITHUB_ENV"
+          echo "page_path=${page_path}" >> "$GITHUB_ENV"
+
+      - name: Deploy branch preview to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: .
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: ${{ env.destination_dir }}
+          keep_files: true
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Print preview URL
+        run: |
+          echo "Preview URL: https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/${page_path}"
