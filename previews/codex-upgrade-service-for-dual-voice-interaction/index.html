@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI · me 대화 TTS 앱</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Dialogue Text to Speech</p>
+    <h1>AI · me 대화 TTS 앱</h1>
+    <p class="intro">각 줄을 <strong>ai:</strong> 또는 <strong>me:</strong>로 시작하면 화자별로 다른 목소리로 차례대로 읽어줍니다.</p>
+
+    <section aria-labelledby="tts-form-title">
+      <h2 id="tts-form-title">대화 읽기</h2>
+
+      <label for="textInput">읽을 대화를 입력하세요</label>
+      <textarea id="textInput" name="text" rows="8" spellcheck="false">ai: 안녕하세요. 무엇을 도와드릴까요?
+me: 네 안녕하세요. 목소리를 다르게 들려주세요.</textarea>
+      <p class="hint">지원 형식: <code>ai: 문장</code>, <code>me: 문장</code>. 화자 표시가 없는 줄은 기본 화자인 me로 읽습니다.</p>
+
+      <div class="speaker-grid" role="group" aria-label="화자별 음성 설정">
+        <fieldset class="speaker-card speaker-card-ai">
+          <legend>AI 목소리</legend>
+          <label for="aiVoiceSelect">음성 선택</label>
+          <select id="aiVoiceSelect" name="aiVoice"></select>
+          <div class="range-row">
+            <label for="aiPitchInput">높낮이 <span id="aiPitchValue">1.15</span></label>
+            <input id="aiPitchInput" type="range" min="0.5" max="2" step="0.05" value="1.15">
+          </div>
+        </fieldset>
+
+        <fieldset class="speaker-card speaker-card-me">
+          <legend>me 목소리</legend>
+          <label for="meVoiceSelect">음성 선택</label>
+          <select id="meVoiceSelect" name="meVoice"></select>
+          <div class="range-row">
+            <label for="mePitchInput">높낮이 <span id="mePitchValue">0.9</span></label>
+            <input id="mePitchInput" type="range" min="0.5" max="2" step="0.05" value="0.9">
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="controls">
+        <label for="rateInput">읽기 속도 <span id="rateValue">1.00</span></label>
+        <input id="rateInput" type="range" min="0.6" max="1.4" step="0.05" value="1">
+      </div>
+
+      <div class="button-row">
+        <button type="button" id="speakButton">대화 읽기</button>
+        <button type="button" id="stopButton">정지</button>
+      </div>
+
+      <p id="message" role="status" aria-live="polite"></p>
+
+      <ol id="dialoguePreview" class="dialogue-preview" aria-label="읽을 대화 미리보기"></ol>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
